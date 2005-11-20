@@ -45,7 +45,7 @@ function video_help($section = "admin/help#video") {
  */
 function video_menu() {
   global $user;
-  //if ($may_cache) {
+  if ($may_cache) {
     $items[] = array(
       'path' => 'node/add/video',
       'title' => t('video'),
@@ -56,24 +56,25 @@ function video_menu() {
       'type' => MENU_CALLBACK,
       'callback arguments' => arg(3),
       'access' => user_access('access content'));
-    //}
-
-  if (arg(0) == 'node' && is_numeric(arg(1))) {
-    $node = node_load(array('nid' => arg(1)));
-
-    if ($node->type == 'video') {
-      $items[] = array('path' => 'node/'. arg(1) .'/play',
-        'title' => t('play'),
-        'callback' => 'video_play',
-        'access' => user_access('access content'),
-        'weight' => 3,
-        'type' => MENU_LOCAL_TASK);
-      $items[] = array('path' => 'node/'.arg(1).'/download',
-        'title' => t('download'),
-        'callback' => 'video_download',
-        'access' => user_access('access content'),
-        'weight' => 5,
-        'type' => MENU_LOCAL_TASK);
+  }
+  else {
+    if (arg(0) == 'node' && is_numeric(arg(1))) {
+      $node = node_load(array('nid' => arg(1)));
+  
+      if ($node->type == 'video') {
+        $items[] = array('path' => 'node/'. arg(1) .'/play',
+          'title' => t('play'),
+          'callback' => 'video_play',
+          'access' => user_access('access content'),
+          'weight' => 3,
+          'type' => MENU_LOCAL_TASK);
+        $items[] = array('path' => 'node/'.arg(1).'/download',
+          'title' => t('download'),
+          'callback' => 'video_download',
+          'access' => user_access('access content'),
+          'weight' => 5,
+          'type' => MENU_LOCAL_TASK);
+      }
     }
   }
   return $items;
