@@ -54,7 +54,7 @@ function video_menu() {
       'path' => 'video/goto',
       'callback' => '_video_page_goto',
       'type' => MENU_CALLBACK,
-      'callback arguments' => arg(3),
+      //'callback arguments' => arg(3),
       'access' => user_access('access content'));
   }
   else {
@@ -244,10 +244,10 @@ function theme_video_play($node, $main = 0)
 {
 	$output = "\n<div id=\"video-player\">\n";
 	$output .= '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="330" height="250" scale="tofit" codebase="http://www.apple.com/qtactivex/qtplugin.cab">          
-                <param name="SRC" value="'.url("video/goto/$node->nid").'" />
+                <param name="SRC" value="'.url("node/$node->nid/download").'" />
                 <param name="AUTOPLAY" value="true" />
                 <param name="KIOSKMODE" value="false" />
-                  <embed src="'.url("video/goto/$node->nid").'" width="'.$node->videox.'" height="'.$node->videoy.'" scale="tofit" autoplay="true" kioskmode="false" pluginspage="http://www.apple.com/quicktime/download/">
+                  <embed src="'.url("node/$node->nid/download").'" width="'.$node->videox.'" height="'.$node->videoy.'" scale="tofit" autoplay="true" kioskmode="false" pluginspage="http://www.apple.com/quicktime/download/">
                   </embed>
              </object>
 						 <p> ';
