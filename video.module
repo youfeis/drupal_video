@@ -43,7 +43,7 @@ function video_help($section = "admin/help#video") {
 /**
  * Implementation of hook_menu().
  */
-function video_menu() {
+function video_menu($may_cache) {
   global $user;
   if ($may_cache) {
     $items[] = array(
@@ -94,9 +94,11 @@ function video_perm() {
   return array('create videos');
 }
 
+/*
 function video_settings() {
 // put something good here
 }
+*/
 
 
 
@@ -136,13 +138,13 @@ function video_form(&$node, &$param) {
 }
 
 function video_insert($node) {
-	
+  
    db_query("INSERT INTO {video} (nid, vidfile, size, videox, videoy) VALUES ('%d', '%s', '%s', '%d', '%d')",
-	$node->nid, $node->vidfile, $node->size, $node->videox, $node->videoy);
+  $node->nid, $node->vidfile, $node->size, $node->videox, $node->videoy);
 }
 
 function video_update($node) {
-	db_query("UPDATE {video} SET vidfile = '%s', size = '%s', videox = '%d', videoy = '%d' WHERE nid = '%d'", $node->vidfile, $node->size, $node->videox, $node->videoy, $node->nid);
+  db_query("UPDATE {video} SET vidfile = '%s', size = '%s', videox = '%d', videoy = '%d' WHERE nid = '%d'", $node->vidfile, $node->size, $node->videox, $node->videoy, $node->nid);
 }
 
 function video_delete(&$node) {
@@ -199,23 +201,23 @@ function video_block_list($type = 'top') {
 
 
 function _video_page_goto($id, $type = 'video') {
-	global $base_url;
-	if (in_array($type, array("video", "feed"))) {
-		$result = db_query(db_rewrite_sql("SELECT n.nid, n.vidfile FROM {video} n WHERE n.nid = '%d'"), $id);
-		$wl = db_fetch_object($result);
+  global $base_url;
+  if (in_array($type, array("video", "feed"))) {
+    $result = db_query(db_rewrite_sql("SELECT n.nid, n.vidfile FROM {video} n WHERE n.nid = '%d'"), $id);
+    $wl = db_fetch_object($result);
 $type = "vidfile";
-		if ($wl->$type!='')   {
+    if ($wl->$type!='')   {
        db_query("UPDATE {video} SET clicks = clicks + 1 where nid = '%d'", $id);
        // Didn't this use to work?
        header("HTTP/1.0 301 Moved Permanently");
     }
-		header("Location: ".$wl->$type);
+    header("Location: ".$wl->$type);
   }
 }
 
 
 function video_download() {
-	 if ($node = node_load(array('nid' => arg(1)))) {
+   if ($node = node_load(array('nid' => arg(1)))) {
     _video_page_goto($node->nid);
   }
   else {
@@ -227,7 +229,7 @@ function video_download() {
 Implements play callback function from node menu
 */
 function video_play() {
-	 if ($node = node_load(array('nid' => arg(1)))) {
+   if ($node = node_load(array('nid' => arg(1)))) {
     print theme('video_play', $node, $node->title);
   }
   else {
@@ -242,20 +244,20 @@ linked to the file record of the node.
 */
 function theme_video_play($node, $main = 0)
 {
-	$output = "\n<div id=\"video-player\">\n";
-	$output .= '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="330" height="250" scale="tofit" codebase="http://www.apple.com/qtactivex/qtplugin.cab">          
+  $output = "\n<div id=\"video-player\">\n";
+  $output .= '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="330" height="250" scale="tofit" codebase="http://www.apple.com/qtactivex/qtplugin.cab">          
                 <param name="SRC" value="'.url("node/$node->nid/download").'" />
                 <param name="AUTOPLAY" value="true" />
                 <param name="KIOSKMODE" value="false" />
                   <embed src="'.url("node/$node->nid/download").'" width="'.$node->videox.'" height="'.$node->videoy.'" scale="tofit" autoplay="true" kioskmode="false" pluginspage="http://www.apple.com/quicktime/download/">
                   </embed>
              </object>
-						 <p> ';
-	$output .= t("Problems viewing videos?")."<br />";
-	$output .= t("Download latest Quicktime Player")." ";
-	$output .= '<a href="http://www.apple.com/quicktime/download" title="Link to QuickTime Downoad Page">'.t("here").'</a>';
-	$output .= "</p> \n </div>\n";
-	return theme("page", $output, t("Playing")." ".$node->title);
+             <p> ';
+  $output .= t("Problems viewing videos?")."<br />";
+  $output .= t("Download latest Quicktime Player")." ";
+  $output .= '<a href="http://www.apple.com/quicktime/download" title="Link to QuickTime Downoad Page">'.t("here").'</a>';
+  $output .= "</p> \n </div>\n";
+  return theme("page", $output, t("Playing")." ".$node->title);
 }
 
 
