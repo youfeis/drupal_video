@@ -1,8 +1,8 @@
 CREATE TABLE video (
 nid int(10) unsigned NOT NULL default '0',
 vidfile text NOT NULL default '',
-videox int(4) NOT NULL default '',
-videoy int(4) NOT NULL default '',
+videox int(4) NOT NULL default '0',
+videoy int(4) NOT NULL default '0',
 size varchar(30) NOT NULL default '',
 clicks int(10) unsigned NOT NULL default '0',
 PRIMARY KEY  (nid)
