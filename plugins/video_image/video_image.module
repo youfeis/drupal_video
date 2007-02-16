@@ -58,10 +58,8 @@ function video_image_nodeapi(&$node, $op, $teaser) {
       case 'load': 
         $output['iid'] = $node->serial_data['iid'];
         return $output;
+      
       case 'submit':
-        $node->serial_data['iid'] = $node->iid;
-      break;
-      case 'prepare':
         // check that image.module is actived
         if ( !module_exist("image")) {
           db_query("UPDATE {system} SET status = 0 WHERE name ='video_image' AND type = 'module' LIMIT 1");
@@ -73,7 +71,15 @@ function video_image_nodeapi(&$node, $op, $teaser) {
         $image->name = $node->name;
         $image->created = $node->created;
         $image->type = 'image';
-        image_prepare($image, 'image');
+        if (!$field_name && module_exist('video_ffmpeg_helper') && variable_get('video_ffmpeg_helper_auto_thumbnail', false)) {
+          $image->title = $_SESSION['video_upload_file']->filename;
+          $field_name = _video_ffmpeg_helper_auto_thumbnail($node);
+        }
+        else {
+          $image->title = $_POST['edit']['image_title'];
+          $field_name = 'image';
+        }
+        image_prepare($image, $field_name);
         if ($image->images) {
           node_validate($image);
           if (!form_get_errors()) {
@@ -81,11 +87,21 @@ function video_image_nodeapi(&$node, $op, $teaser) {
             node_save($image);
             $node->iid = $image->nid;
             $node->new_image = TRUE;
+            
+            // needed to set the correct status and promote values if the user does not have enought permissions. Is there a better solution???
+            db_query('UPDATE {node} SET status = %d, promote = %d WHERE nid = %d AND vid = %d', 0, 0, $image->nid, $image->vid); 
           }
         }
         elseif ($_POST['edit']['iid']) {
           $node->iid = $_POST['edit']['iid'];
         }
+      
+        $node->serial_data['iid'] = $node->iid;
+      break;
+      
+      case 'prepare':
+        ;
+        //print_r($node->iid); die;
       break;
 
       case 'view':
