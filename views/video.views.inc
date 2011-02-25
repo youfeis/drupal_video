@@ -1,5 +1,4 @@
 <?php
-//$Id$
 /**
 * Provides views data and enumerates handlers for video.module
 *
