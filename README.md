@@ -17,10 +17,16 @@ player.
 - Automatic metadata insertion using flvtool2
 - Convert to WebM, Ogg Vorbis, MOV, H.264 and/or FLV.
 
+## Using Zencoder locally
+
+If you testing out the Video module and Zencoder on localhost, you'll need to
+use Zencoder's Fetcher script to be notified when a video is finished.
+
+See [the complete instructions](https://app.zencoder.com/docs/guides/advanced-integration/getting-zencoder-notifications-while-developing-locally).
+
 ## More information
 
-- [Documentation](http://video.heidisoft.com/documentation/welcome-video-module-documentation)
-- [Handbook](http://video.heidisoft.com/content/features)
+- [Documentation](http://docs.heidisoft.com/welcome-video-module-handbook/introduction-video-module)
 - [Report a bug](http://drupal.org/node/add/project-issue/video)
 
 ## Maintainers
