@@ -231,7 +231,10 @@ function video_requirements($phase) {
   }
 
   $transcoder = video_get_transcoder();
-  return $transcoder->requirements();
+  if ($transcoder != NULL) {
+    return $transcoder->requirements();
+  }
+  return array();
 }
 
 /**
