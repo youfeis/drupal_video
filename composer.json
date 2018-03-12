@@ -4,7 +4,7 @@
   "type": "drupal-module",
   "homepage": "https://www.drupal.org/project/video",
   "keywords": ["Drupal", "media", "video", "transcode", "embed"],
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Heshan Wanigasooriya",
@@ -12,7 +12,7 @@
       "role": "Maintainer"
     }
   ],
-  "minimum-stability": "8.x-2.x",
+  "minimum-stability": "dev",
   "extra": {
     "drupal": {
       "package": "Field types",
@@ -30,6 +30,6 @@
     }
   ],
   "require": {
-    "drupal/core": "~8.1",
+    "drupal/core": "~8.1"
   }
 }
