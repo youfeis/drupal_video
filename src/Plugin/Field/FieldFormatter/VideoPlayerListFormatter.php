@@ -43,7 +43,8 @@ class VideoPlayerListFormatter extends VideoPlayerFormatter implements Container
     $video_items = [];
     foreach ($files as $delta => $file) {
       $video_uri = $file->getFileUri();
-      $video_items[] = Url::fromUri(file_create_url($video_uri));
+      $relative_url = file_url_transform_relative(file_create_url($video_uri));
+      $video_items[] = Url::fromUserInput($relative_url);
     }
     $elements[] = [
       '#theme' => 'video_player_formatter',
@@ -52,7 +53,7 @@ class VideoPlayerListFormatter extends VideoPlayerFormatter implements Container
     ];
     return $elements;
   }
-  
+
   /**
    * {@inheritdoc}
    */
