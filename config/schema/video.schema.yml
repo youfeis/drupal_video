@@ -11,6 +11,15 @@ field.field_settings.video:
     description_field:
       type: boolean
       label: 'Enable Description field'
+    file_directory:
+      type: string
+      label: 'File directory'
+    file_extensions:
+      type: string
+      label: 'Allowed file extensions'
+    max_filesize:
+      type: string
+      label: 'Maximum upload size'
 
 field.widget.settings.video_upload:
   type: mapping
@@ -39,6 +48,8 @@ field.widget.settings.video_embed:
     allowed_providers:
       type: sequence
       label: 'Allowed Providers'
+      sequence:
+        type: ignore
     file_directory:
       type: string
       label: 'File directory'
