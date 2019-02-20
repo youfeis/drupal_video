@@ -66,6 +66,7 @@ class VideoEmbedPlayerFormatter extends FormatterBase implements ContainerFactor
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
+    $form = [];
     $form['autoplay'] = [
       '#title' => t('Autoplay'),
       '#type' => 'checkbox',

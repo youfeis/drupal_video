@@ -97,6 +97,7 @@ class VideoEmbedThumbnailFormatter extends FormatterBase implements ContainerFac
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
+    $form = [];
     $form['image_style'] = [
       '#title' => $this->t('Image Style'),
       '#type' => 'select',
