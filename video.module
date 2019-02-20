@@ -5,11 +5,9 @@
  * Exposes global functionality for video fields.
  */
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\file\Entity\File;
-use Drupal\field\FieldStorageConfigInterface;
-use Drupal\field\FieldConfigInterface;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  * Implements hook_theme().
@@ -20,4 +18,27 @@ function video_theme() {
       'variables' => array('items' => NULL, 'player_attributes' => NULL)
     ),
   );
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ */
+function video_file_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  switch ($operation) {
+    case 'view':
+      /** @var \Drupal\video\ProviderManager $provider_manager */
+      $provider_manager = \Drupal::service('video.provider_manager');
+      $stream_wrappers = [];
+      foreach ($provider_manager->getDefinitions() as $definition) {
+        $stream_wrappers[] = $definition['id'];
+      }
+      $scheme = \Drupal::service('file_system')->uriScheme($entity->getFileUri());
+      if (in_array($scheme, $stream_wrappers)) {
+        return AccessResult::allowedIfHasPermission($account, 'access content');
+      }
+      return AccessResult::neutral();
+
+    default:
+      return AccessResult::neutral();
+  }
 }
