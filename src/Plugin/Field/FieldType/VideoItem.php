@@ -30,7 +30,10 @@ use Drupal\Component\Utility\Random;
  *     },
  *   },
  *   list_class = "\Drupal\file\Plugin\Field\FieldType\FileFieldItemList",
- *   constraints = {"ReferenceAccess" = {}, "FileValidation" = {}}
+ *   constraints = {"ReferenceAccess" = {}, "FileValidation" = {}},
+ *   serialized_property_names = {
+ *     "data"
+ *   }
  * )
  */
 class VideoItem extends FileItem {
