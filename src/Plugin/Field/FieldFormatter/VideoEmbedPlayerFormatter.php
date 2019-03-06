@@ -59,6 +59,7 @@ class VideoEmbedPlayerFormatter extends FormatterBase implements ContainerFactor
       'width' => '854',
       'height' => '480',
       'autoplay' => TRUE,
+      'related_videos' => FALSE
     ];
   }
 
@@ -71,6 +72,11 @@ class VideoEmbedPlayerFormatter extends FormatterBase implements ContainerFactor
       '#title' => t('Autoplay'),
       '#type' => 'checkbox',
       '#default_value' => $this->getSetting('autoplay'),
+    ];
+    $form['related_videos'] = [
+      '#title' => t('Related Videos'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('related_videos'),
     ];
     $form['width'] = [
       '#title' => t('Width'),
@@ -91,9 +97,10 @@ class VideoEmbedPlayerFormatter extends FormatterBase implements ContainerFactor
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $summary[] = t('Embedded Video (@widthx@height@autoplay).', [
+    $summary[] = t('Embedded Video (@widthx@height@autoplay@related_videos).', [
       '@width' => $this->getSetting('width'),
       '@height' => $this->getSetting('height'),
+      '@related_videos' => $this->getSetting('related_videos') ? t(', showing related videos') : '' ,
       '@autoplay' => $this->getSetting('autoplay') ? t(', autoplaying') : '' ,
     ]);
     return $summary;
