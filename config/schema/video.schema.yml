@@ -36,11 +36,11 @@ field.widget.settings.video_upload:
       label: 'Allowed file extensions'
     max_filesize:
       type: string
-      label: 'Maximum upload size'      
+      label: 'Maximum upload size'
     uri_scheme:
       type: string
       label: 'Upload destination'
-            
+
 field.widget.settings.video_embed:
   type: mapping
   label: 'Video embed settings'
@@ -82,7 +82,7 @@ field.formatter.settings.video_player:
     preload:
       type: string
       label: 'Preload'
-      
+
 field.formatter.settings.video_player_list:
   type: mapping
   label: 'Video player settings'
@@ -132,4 +132,7 @@ field.formatter.settings.video_embed_player:
       label: 'Width'
     height:
       type: string
-      label: 'Height'      
+      label: 'Height'
+    related_videos:
+      type: boolean
+      label: 'Related Videos'
