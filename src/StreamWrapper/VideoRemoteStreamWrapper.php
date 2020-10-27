@@ -4,7 +4,6 @@ namespace Drupal\video\StreamWrapper;
 
 use Drupal\Core\StreamWrapper\ReadOnlyStream;
 use Drupal\Core\StreamWrapper\StreamWrapperInterface;
-use Drupal\Component\Utility\UrlHelper;
 
 /**
  * Defines a video read only stream wrapper class.
@@ -13,17 +12,17 @@ use Drupal\Component\Utility\UrlHelper;
  * interface.
  */
 abstract class VideoRemoteStreamWrapper extends ReadOnlyStream {
-  
+
   protected static $base_url = NULL;
   protected $parameters = [];
-  
+
   /**
    * {@inheritdoc}
    */
   public static function getType() {
     return StreamWrapperInterface::READ;
   }
-  
+
   /**
    * Finds and returns the base URL for read only stream.
    * @return string
@@ -32,7 +31,7 @@ abstract class VideoRemoteStreamWrapper extends ReadOnlyStream {
   public static function baseUrl() {
     return self::$base_url;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -47,21 +46,21 @@ abstract class VideoRemoteStreamWrapper extends ReadOnlyStream {
     $path = str_replace('\\', '/', $this->getTarget());
     return static::baseUrl() . '/' . $path;
   }
-  
+
   /**
    * Returns the base path for stream wrapper.
    */
   public static function basePath(\SplString $site_path = NULL) {
     return static::baseUrl();
   }
-  
+
   /**
    * {@inheritdoc}
    */
   function setUri($uri) {
     $this->uri = $uri;
   }
-  
+
   /**
    * Returns the local writable target of the resource within the stream.
    *
@@ -88,7 +87,7 @@ abstract class VideoRemoteStreamWrapper extends ReadOnlyStream {
     // Remove erroneous leading or trailing, forward-slashes and backslashes.
     return trim($target, '\/');
   }
-  
+
   /**
    * Returns the canonical absolute path of the URI, if possible.
    *
@@ -121,7 +120,8 @@ abstract class VideoRemoteStreamWrapper extends ReadOnlyStream {
     $realpath = realpath($path);
     if (!$realpath) {
       // This file does not yet exist.
-      $realpath = realpath(dirname($path)) . '/' . drupal_basename($path);
+      $file_system = \Drupal::service('file_system');
+      $realpath = realpath(dirname($path)) . '/' . $file_system->basename($path);
     }
     $directory = realpath($this->getDirectoryPath());
     if (!$realpath || !$directory || strpos($realpath, $directory) !== 0) {
@@ -129,7 +129,7 @@ abstract class VideoRemoteStreamWrapper extends ReadOnlyStream {
     }
     return $realpath;
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -163,7 +163,7 @@ abstract class VideoRemoteStreamWrapper extends ReadOnlyStream {
 
     return $scheme . '://' . $dirname;
   }
-  
+
   /**
    * Support for closedir().
    *
@@ -319,7 +319,7 @@ abstract class VideoRemoteStreamWrapper extends ReadOnlyStream {
   public function stream_tell() {
     return ftell($this->handle);
   }
-  
+
   /**
    * Support for stat().
    *

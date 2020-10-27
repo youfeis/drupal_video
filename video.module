@@ -8,6 +8,7 @@
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\file\Entity\File;
 
 /**
  * Implements hook_theme().
@@ -32,7 +33,9 @@ function video_file_access(EntityInterface $entity, $operation, AccountInterface
       foreach ($provider_manager->getDefinitions() as $definition) {
         $stream_wrappers[] = $definition['id'];
       }
-      $scheme = \Drupal::service('file_system')->uriScheme($entity->getFileUri());
+
+      $file_entity = File::load($entity->id());
+      $scheme = \Drupal::service('stream_wrapper_manager')->getScheme($file_entity->getFileUri());
       if (in_array($scheme, $stream_wrappers)) {
         return AccessResult::allowedIfHasPermission($account, 'access content');
       }

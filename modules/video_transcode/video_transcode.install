@@ -10,7 +10,6 @@
  */
 function video_transcode_schema() {
   // Use the content entity api to store video jobs and results
-  
   // $schema['video_transcode_jobs'] = array(
  //    'description' => 'Store video transcoding jobs.',
  //    'fields' => array(

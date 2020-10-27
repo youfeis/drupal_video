@@ -62,7 +62,8 @@ class VideoItemSerializationTest extends FieldKernelTestBase {
     $json = json_decode($this->serializer->serialize($entity, 'json'), TRUE);
     $json['field_test'][0]['data'] = 'string data';
     $serialized = json_encode($json, TRUE);
-    $this->setExpectedException(\LogicException::class, 'The generic FieldItemNormalizer cannot denormalize string values for "data" properties of the "field_test" field (field item class: Drupal\video\Plugin\Field\FieldType\VideoItem).');
+    $this->expectException(\LogicException::class);
+    $this->expectExceptionMessage('The generic FieldItemNormalizer cannot denormalize string values for "data" properties of the "field_test" field (field item class: Drupal\video\Plugin\Field\FieldType\VideoItem).');
     $this->serializer->deserialize($serialized, EntityTest::class, 'json');
   }
 

@@ -1,4 +1,5 @@
 name: Video Transcode
+core_version_requirement: ^8 || ^9
 description: 'Convert uploaded video files in to web compatible video formats.'
 type: module
 package: Media

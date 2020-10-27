@@ -115,7 +115,7 @@ class PresetFormBase extends EntityForm {
       '#required' => TRUE,
       '#weight' => -9
     );
-    
+
     // video settings
     $form['settings']['video'] = array(
       '#type' => 'fieldset',
@@ -147,7 +147,7 @@ class PresetFormBase extends EntityForm {
       ),
       '#default_value' => (!empty($preset->video_quality)) ? $preset->video_quality : 3,
     );
-    
+
     $form['settings']['video']['video_speed'] = array(
       '#type' => 'select',
       '#title' => $this->t('Video speed'),
@@ -162,14 +162,14 @@ class PresetFormBase extends EntityForm {
       ),
       '#default_value' => (!empty($preset->video_speed)) ? $preset->video_speed : 3,
     );
-    
+
     $form['settings']['video']['wxh'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Dimensions'),
       '#description' => $this->t('The resolution of the output file, expressed as WxH, like 640×480 or 1280×720.'),
       '#default_value' => !empty($preset->wxh) ? $preset->wxh : '640x360',
     );
-    
+
     $form['settings']['video']['video_aspectmode'] = array(
       '#type' => 'select',
       '#title' => $this->t('Aspect mode'),
@@ -182,14 +182,14 @@ class PresetFormBase extends EntityForm {
       ),
       '#default_value' => (!empty($preset->video_aspectmode)) ? $preset->video_aspectmode : 'preserve',
     );
-    
+
     $form['settings']['video']['video_upscale'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Upscale'),
       '#description' => $this->t('If the input file is smaller than the target output, should the file be upscaled to the target size?'),
       '#default_value' => !empty($preset->video_upscale) ? $preset->video_upscale : ''
     );
-    
+
     // audio settings
     $form['settings']['audio'] = array(
       '#type' => 'fieldset',
@@ -206,7 +206,7 @@ class PresetFormBase extends EntityForm {
       '#required' => TRUE,
       '#default_value' => (!empty($preset->audio_codec)) ? $preset->audio_codec : 'mp3',
     );
-    
+
     $form['settings']['audio']['audio_quality'] = array(
       '#type' => 'select',
       '#title' => $this->t('Audio quality'),
@@ -221,7 +221,7 @@ class PresetFormBase extends EntityForm {
       ),
       '#default_value' => (!empty($preset->audio_quality)) ? $preset->audio_quality : 3,
     );
-    
+
     // advanced video settings
     $form['settings']['adv_video'] = array(
       '#type' => 'fieldset',
@@ -287,7 +287,7 @@ class PresetFormBase extends EntityForm {
       '#description' => $this->t('The video track will be omitted from the output. You can still specify a video format, however, no video track will be present in the resulting file.'),
       '#default_value' => !empty($preset->skip_video) ? $preset->skip_video : ''
     );
-    
+
     $reference_frames = ['auto' => 'auto'] + range(0, 16);
     $form['settings']['adv_video']['reference_frames'] = array(
       '#type' => 'select',
@@ -305,7 +305,7 @@ class PresetFormBase extends EntityForm {
       '#options' => $profiles,
       '#default_value' => !empty($preset->h264_profile) ? $preset->h264_profile : '1',
     );
-    
+
     $codec_levels = ['1'=>'1', '1b'=>'1b', '1.1'=>'1.1', '1.2'=>'1.2', '1.3'=>'1.3', '2'=>'2', '2.1'=>'2.1', '2.2'=>'2.2', '3'=>'3', '3.1'=>'3.1', '3.2'=>'3.2', '4'=>'4', '4.1'=>'4.1', '4.2'=>'4.2', '5'=>'5', '5.1'=>'5.1', '5.2'=>'5.2', '6'=>'6', '6.1'=>'6.1', '6.2'=>'6.2'];
     $form['settings']['adv_video']['codec_level'] = array(
       '#type' => 'select',
@@ -314,8 +314,8 @@ class PresetFormBase extends EntityForm {
       '#options' => $codec_levels,
       '#default_value' => !empty($preset->codec_level) ? $preset->codec_level : '4',
     );
-    
-    
+
+
     // advanced audio settings
     $form['settings']['adv_audio'] = array(
       '#type' => 'fieldset',
@@ -484,7 +484,7 @@ class PresetFormBase extends EntityForm {
       ),
       '#default_value' => (!empty($preset->denoise)) ? $preset->denoise : 2
     );
-    
+
     // Create clip
     $form['settings']['create_clip'] = array(
       '#type' => 'fieldset',
@@ -600,12 +600,12 @@ class PresetFormBase extends EntityForm {
 
     if ($status == SAVED_UPDATED) {
       // If we edited an existing entity...
-      drupal_set_message($this->t('Preset %label has been updated.', array('%label' => $preset->label())));
+      $this->messenger()->addStatus($this->t('Preset %label has been updated.', ['%label' => $preset->label()]));
       $this->logger('video_transcode')->notice('Preset %label has been updated.', ['%label' => $preset->label(), 'link' => $edit_link]);
     }
     else {
       // If we created a new entity...
-      drupal_set_message($this->t('Preset %label has been added.', array('%label' => $preset->label())));
+      $this->messenger()->addStatus($this->t('Preset %label has been added.', ['%label' => $preset->label()]));
       $this->logger('video_transcode')->notice('Preset %label has been added.', ['%label' => $preset->label(), 'link' => $edit_link]);
     }
 

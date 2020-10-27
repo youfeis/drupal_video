@@ -3,7 +3,7 @@
 namespace Drupal\video\Plugin\migrate\cckfield;
 
 use Drupal\migrate\Plugin\MigrationInterface;
-use Drupal\migrate_drupal\Plugin\migrate\cckfield\CckFieldPluginBase;
+use Drupal\migrate_drupal\Plugin\migrate\field\FieldPluginBase;
 
 /**
  * @MigrateCckField(
@@ -11,7 +11,7 @@ use Drupal\migrate_drupal\Plugin\migrate\cckfield\CckFieldPluginBase;
  *   core = {7}
  * )
  */
-class VideoItem extends CckFieldPluginBase {
+class VideoItem extends FieldPluginBase {
 
   /**
    * {@inheritdoc}

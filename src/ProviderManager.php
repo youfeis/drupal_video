@@ -62,9 +62,11 @@ class ProviderManager extends DefaultPluginManager implements ProviderManagerInt
     }
     return FALSE;
   }
-  
+
   /**
    * {@inheritdoc}
+   *
+   * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
   public function loadProviderFromStream($stream, $file, $metadata = [], $settings = []) {
     $definitions = $this->getDefinitions();

@@ -30,7 +30,7 @@ class TranscodeJobListBuilder extends EntityListBuilder {
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
     return new static(
       $entity_type,
-      $container->get('entity.manager')->getStorage($entity_type->id()),
+      $container->get('entity_type.manager')->getStorage($entity_type->id()),
       $container->get('url_generator')
     );
   }
@@ -79,11 +79,13 @@ class TranscodeJobListBuilder extends EntityListBuilder {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Drupal\Core\Entity\EntityMalformedException
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\video_transcode\Entity\TranscodeJob */
     $row['id'] = $entity->id();
-    $row['name'] = $entity->link();
+    $row['name'] = $entity->toLink()->toString();
     return $row + parent::buildRow($entity);
   }
 

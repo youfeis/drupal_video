@@ -1,4 +1,5 @@
 name: Video
+core_version_requirement: ^8 || ^9
 type: module
 description: A field type for storing uploaded or embedded videos.
 package: Field types

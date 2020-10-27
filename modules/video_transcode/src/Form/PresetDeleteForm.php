@@ -74,15 +74,17 @@ class PresetDeleteForm extends EntityConfirmFormBase {
    *   An associative array containing the structure of the form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   An associative array containing the current state of the form.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Delete the entity.
     $this->entity->delete();
 
     // Set a message that the entity was deleted.
-    drupal_set_message($this->t('Preset %label was deleted.', array(
+    $this->messenger()->addStatus($this->t('Preset %label was deleted.', [
       '%label' => $this->entity->label(),
-    )));
+    ]));
 
     // Redirect the user to the list controller when complete.
     $form_state->setRedirectUrl($this->getCancelUrl());

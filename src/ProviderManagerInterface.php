@@ -37,14 +37,14 @@ interface ProviderManagerInterface {
    *   The relevant plugin or FALSE on failure.
    */
   public function loadApplicableDefinitionMatches(array $definitions, $user_input);
-  
+
   /**
    * Load a provider from stream wrapper.
    *
    * @param string $stream
    *   Stream used from the file.
    *
-   * @param Drupal\file\Entity\File $file
+   * @param \Drupal\file\Entity\File $file
    *   The source file.
    *
    * @param array $data

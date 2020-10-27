@@ -23,13 +23,7 @@
     "issues": "https://www.drupal.org/project/issues/video",
     "source": "https://www.drupal.org/project/video"
   },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://packages.drupal.org/8"
-    }
-  ],
   "require": {
-    "drupal/core": "~8.1"
+    "drupal/core": "^8 || ^9"
   }
 }
